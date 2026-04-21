@@ -111,6 +111,15 @@ fi
 # ripgrep (for Telescope live_grep)
 install_if_missing rg ripgrep
 
+# tree-sitter CLI (for nvim-treesitter parser compilation)
+section "tree-sitter (for syntax highlighting)"
+if ! command -v tree-sitter &>/dev/null; then
+    info "Installing tree-sitter CLI..."
+    run "npm install -g tree-sitter-cli"
+else
+    ok "tree-sitter already installed"
+fi
+
 # fd (for Telescope file finder — much faster than find)
 if [[ "$OS" == "macos" ]]; then
     install_if_missing fd fd
@@ -182,6 +191,10 @@ if command -v nvim &>/dev/null && ! $DRY_RUN; then
     # +qa exits after lazy finishes
     nvim --headless "+Lazy! sync" +qa 2>&1 | tail -5 || true
     ok "Plugins installed"
+
+    info "Installing treesitter parsers (this may take a minute)..."
+    nvim --headless "+TSUpdate" +qa 2>&1 | tail -5 || true
+    ok "Treesitter parsers installed"
 else
     $DRY_RUN && warn "(dry) Skipping nvim headless bootstrap"
 fi
@@ -191,6 +204,7 @@ section "All done"
 echo -e "${GREEN}${BOLD}Dotfiles installed successfully!${RESET}"
 echo ""
 echo "  • Open nvim and wait for LSP servers to install via Mason."
+echo "  • Run :TSUpdate in nvim to compile treesitter parsers if needed."
 echo "  • If on WSL, add to your ~/.bashrc / ~/.zshrc:"
 echo "      export DISPLAY=:0   # only needed for GUI-forwarded apps"
 echo ""
