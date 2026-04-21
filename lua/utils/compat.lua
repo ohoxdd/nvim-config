@@ -17,20 +17,11 @@ M.nvim_011 = M.has("nvim-0.11")
 --- nvim 0.10+ deprecated vim.diagnostic.disable() in favour of
 --- vim.diagnostic.enable(false, …).
 M.diagnostic_disable = function(bufnr)
-    if M.nvim_010 then
-        vim.diagnostic.enable(false, bufnr and { bufnr = bufnr } or nil)
-    else
-        ---@diagnostic disable-next-line: deprecated
-        vim.diagnostic.disable(bufnr)
-    end
+    vim.diagnostic.enable(false, bufnr and { bufnr = bufnr } or nil)
 end
 
 M.diagnostic_enable = function(bufnr)
-    if M.nvim_010 then
-        vim.diagnostic.enable(true, bufnr and { bufnr = bufnr } or nil)
-    else
-        vim.diagnostic.enable(bufnr)
-    end
+    vim.diagnostic.enable(true, bufnr and { bufnr = bufnr } or nil)
 end
 
 --- Setup an LSP server in a way that works on nvim 0.10 (lspconfig) AND
@@ -40,11 +31,8 @@ end
 --- @param opts   table    Options forwarded to the setup call
 M.lsp_setup = function(name, opts)
     if M.nvim_011 and vim.lsp.config then
-        -- On 0.11+ with lspconfig installed, just call vim.lsp.config().
-        -- lspconfig hooks into the native API and calls vim.lsp.enable
-        -- automatically for all known servers — calling it again ourselves
-        -- can interfere with mason-lspconfig's lifecycle.
         vim.lsp.config(name, opts)
+        vim.lsp.enable(name, true)
     else
         local ok, lspconfig = pcall(require, "lspconfig")
         if ok and lspconfig[name] then

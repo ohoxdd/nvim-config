@@ -1,10 +1,17 @@
-vim.cmd("set number")
-vim.cmd("set autoindent")
-vim.cmd("set tabstop=4")
-vim.cmd("set shiftwidth=4")
-vim.cmd("set smarttab")
-vim.cmd("set softtabstop=4")
-vim.cmd("set relativenumber")
+vim.opt.number = true
+vim.opt.autoindent = true
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.smarttab = true
+vim.opt.softtabstop = 4
+vim.opt.relativenumber = true
 vim.g.mapleader = " "
-
-
+vim.opt.expandtab = false
+vim.opt.scrolloff = 8
+vim.opt.sidescrolloff = 8
+vim.opt.wrap = false
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+vim.opt.incsearch = true
+vim.opt.hlsearch = true
+vim.opt.updatetime = 50

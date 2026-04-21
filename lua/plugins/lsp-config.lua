@@ -63,7 +63,11 @@ return {
             }
 
             for name, opts in pairs(servers) do
-                compat.lsp_setup(name, opts)
+                if compat.nvim_011 then
+                    vim.lsp.config(name, opts)
+                else
+                    compat.lsp_setup(name, opts)
+                end
             end
 
             -- ── Shared LSP keymaps ────────────────────────────────────────────
