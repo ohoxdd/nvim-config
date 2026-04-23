@@ -24,6 +24,7 @@ return {
             ensure_installed = {
                 "ts_ls", "html", "lua_ls", "clangd",
                 "marksman",   -- Markdown LSP
+                "pyright",    -- Python LSP
             },
         },
     },
@@ -49,6 +50,7 @@ return {
                 html       = { capabilities = capabilities },
                 clangd     = { capabilities = capabilities },
                 marksman   = { capabilities = capabilities },   -- Markdown
+                pyright    = { capabilities = capabilities },  -- Python
                 lua_ls     = {
                     capabilities = capabilities,
                     settings = {
